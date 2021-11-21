@@ -19,6 +19,8 @@ public:
     bool  m_bLineEsp    = false;
     float m_fAimBotFov  = 10;
     char  custom_name[64] = {0};
+    ImColor m_cLineEspColor = ImColor(255, 255, 255);
+    ImColor m_cBoxEspColor = ImColor(255, 255, 255);
 };
 
 void inline TextCentered(std::string text) {
@@ -111,11 +113,11 @@ int main()
 
             if (settings.m_bLineEsp)
             {
-                espDrawer.DrawLineESP(ent);
+                espDrawer.DrawLineESP(ent, settings.m_cLineEspColor);
             }
             if (settings.m_bBoxEsp)
             {
-                espDrawer.DrawBoxESP(ent);
+                espDrawer.DrawBoxESP(ent, settings.m_cBoxEspColor);
             }
 
         }
@@ -185,7 +187,11 @@ int main()
             case 1:
                 break;
             case 4:
+                ImGui::ColorEdit3("ColorL", (float*)&settings.m_cBoxEspColor, ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_NoLabel);
+                ImGui::SameLine();
                 ImGui::Checkbox("Box  ESP", &settings.m_bBoxEsp);
+                ImGui::ColorEdit3("ColorB", (float*)&settings.m_cLineEspColor, ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_NoLabel);
+                ImGui::SameLine();
                 ImGui::Checkbox("Line ESP", &settings.m_bLineEsp);
                 break;
             case 5:

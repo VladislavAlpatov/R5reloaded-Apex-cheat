@@ -46,7 +46,7 @@ public:
         this->m_iApexModule = program->getModule("r5apex.exe").get();
 
 	}
-	void DrawBoxESP(uintptr_t entity)
+	void DrawBoxESP(uintptr_t entity, ImColor& color)
 	{
         auto top    = this->WorldToScreen(this->m_pProgram->read<ImVec3>(entity + offsets::m_vecOrigin), this->m_pProgram->read<viewmatrix>(this->m_iApexModule + offsets::view_matrix));
         auto bottom = this->WorldToScreen(this->m_pProgram->read<ImVec3>(entity + offsets::m_vecCameraPos) + ImVec3(0, 0, 10), this->m_pProgram->read<viewmatrix>(this->m_iApexModule + offsets::view_matrix));
@@ -61,16 +61,16 @@ public:
         bottom_left.x = top_left.x;
         bottom_right.x = top_right.x;
 
-        this->m_pDrawList->AddLine(top_left,    top_right,    ImColor(255, 255, 255), 2);
-        this->m_pDrawList->AddLine(top_left,    bottom_left,  ImColor(255, 255, 255), 2);
-        this->m_pDrawList->AddLine(top_right,   bottom_right, ImColor(255, 255, 255), 2);
-        this->m_pDrawList->AddLine(bottom_left, bottom_right, ImColor(255, 255, 255), 2);
+        this->m_pDrawList->AddLine(top_left,    top_right,    color, 2);
+        this->m_pDrawList->AddLine(top_left,    bottom_left,  color, 2);
+        this->m_pDrawList->AddLine(top_right,   bottom_right, color, 2);
+        this->m_pDrawList->AddLine(bottom_left, bottom_right, color, 2);
 	}
-    void DrawLineESP(uintptr_t entity)
+    void DrawLineESP(uintptr_t entity, ImColor color)
     {
         auto origin = this->WorldToScreen(this->m_pProgram->read<ImVec3>(entity + offsets::m_vecOrigin), this->m_pProgram->read<viewmatrix>(this->m_iApexModule + offsets::view_matrix));
 
-        this->m_pDrawList->AddLine(ImVec2(1920 / 2, 1080), origin, ImColor(255, 255, 255));
+        this->m_pDrawList->AddLine(ImVec2(1920 / 2, 1080), origin, color, 2);
     }
     bool IsEntityOnScreen(uintptr_t entity)
     {
