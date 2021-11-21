@@ -48,9 +48,11 @@ void EntityListUpdateThread(std::vector<uintptr_t>& list, Memory::External& prog
         Sleep(500);
     }
 }
-
-//int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPWSTR    lpCmdLine, _In_ int       nCmdShow)
+#ifdef _DEBUG
 int main()
+#else
+int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPWSTR    lpCmdLine, _In_ int       nCmdShow)
+#endif // _DEBUG
 {
     std::vector<uintptr_t> entity_list;
     bool draw = false;
