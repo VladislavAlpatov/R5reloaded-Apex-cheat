@@ -63,7 +63,6 @@ int main()
 
     Memory::External program        = Memory::External("r5apex.exe");
     uintptr_t        apex_module    = program.getModule("r5apex.exe").get();
-    std::cout << program.write<char>(apex_module + 0x24718BD2, 'P');
     std::thread(EntityListUpdateThread, std::ref(entity_list), std::ref(program)).detach();
 
 
