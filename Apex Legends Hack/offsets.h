@@ -10,4 +10,5 @@ namespace offsets
 	const uintptr_t m_iHealth = 0x48C;
 	const uintptr_t m_iMaxHealth = 0x488;
 	const uintptr_t sLocalPlayerName = 0x24718BD2;
+	const uintptr_t vecLocalpPlayerCameraPos = 0x1989DD4;
 }

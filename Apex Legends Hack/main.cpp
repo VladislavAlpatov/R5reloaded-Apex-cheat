@@ -10,6 +10,7 @@
 #include <thread>
 #include "offsets.h"
 #include "EspDrawer.h"
+#include "Aimbot.h"
 
 class Settings
 {
@@ -48,6 +49,23 @@ void EntityListUpdateThread(std::vector<uintptr_t>& list, Memory::External& prog
         Sleep(500);
     }
 }
+void AimbotThread(std::vector<uintptr_t>* entityList, Memory::External* program)
+{
+
+    while (true)
+    {
+        Aimbot aimBot = Aimbot(program, entityList);
+
+        if (!GetAsyncKeyState(VK_LBUTTON))
+        {
+            Sleep(50);
+            continue;
+        }
+        aimBot.Work();
+        
+
+    }
+}
 #ifdef _DEBUG
 int main()
 #else
@@ -68,7 +86,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
     Memory::External program        = Memory::External("r5apex.exe");
     uintptr_t        apex_module    = program.getModule("r5apex.exe").get();
     std::thread(EntityListUpdateThread, std::ref(entity_list), std::ref(program)).detach();
-
+    std::thread(AimbotThread, &entity_list, &program).detach();
 
     auto video_mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
     GLFWwindow* window = glfwCreateWindow(video_mode->width, video_mode->height, "Overlay", NULL, NULL);
